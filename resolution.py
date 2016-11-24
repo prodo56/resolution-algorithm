@@ -3,16 +3,16 @@ import re
 
 # token names
 tokens = (
-    'PREDICATE',
-    'VARIABLE',
-    'AND',
-    'OR',
-    'NOT',
-    'IMPLIES',
-    'LPAREN',
-    'RPAREN',
-    'CONSTANT'
-)
+          'PREDICATE',
+          'VARIABLE',
+          'AND',
+          'OR',
+          'NOT',
+          'IMPLIES',
+          'LPAREN',
+          'RPAREN',
+          'CONSTANT'
+          )
 
 # regex for tokens lex
 t_AND = r'\&'
@@ -82,12 +82,12 @@ def parseSentence(inputString,lineno):
             else:
                 predicateDict[tok.value] = [lineno]
 
-    #symbols = inputString.split(" ")
-    #print symbols, predicateDict
+#symbols = inputString.split(" ")
+#print symbols, predicateDict
 
-    for x in predicateDict.keys():
-        #m = re.search('(?<=abc)def', 'abcdef')
-        variables=x[x.find('(')+1:x.find(')')]
+for x in predicateDict.keys():
+    #m = re.search('(?<=abc)def', 'abcdef')
+    variables=x[x.find('(')+1:x.find(')')]
         variableList=variables.split(',')
         for v in variableList:
             lexer.input(v)
@@ -111,7 +111,7 @@ def parseSentence(inputString,lineno):
                         constantDict[tok.value] = l
                 else:
                     constantDict[tok.value] = [x]
-    return tokensList
+return tokensList
 
 
 def moveNot(lexLogic):
@@ -146,10 +146,10 @@ def moveNot(lexLogic):
             else:
                 result.append(elementValue)
         else:
-                #elementType1 == 'PREDICATE':
+            #elementType1 == 'PREDICATE':
             result.append(elementValue)
         i = i + 1
-    sentence = " ".join(result)
+sentence = " ".join(result)
     return parseSentence(sentence,0)
 
 
@@ -215,7 +215,7 @@ def removeImplicationinLogic(lexLogic):
                 while(result[j]!='('):
                     j = j-1
                     stackresult.append(result.pop())
-                    #print len(result)
+                #print len(result)
                 stackresult.append(result.pop())
                 stackresult=moveNotInwards(stackresult)
                 #result.append("~")
@@ -228,8 +228,8 @@ def removeImplicationinLogic(lexLogic):
                 result = result + list(reversed(stackresult))
                 result.append("|")
             i = i + 1
-    if "&" not in result:
-        result = removeParanthesis(result)
+if "&" not in result:
+    result = removeParanthesis(result)
     return " ".join(result)
 
 def removeMultipleNot(lexLogic, logic):
@@ -265,7 +265,7 @@ def removeMultipleNot(lexLogic, logic):
 
 def infixToPostfix(expr):
     prec = {}
-
+    
     prec[")"] = 1
     prec["~"] = 3
     prec["&"] = 2
@@ -285,22 +285,22 @@ def infixToPostfix(expr):
             postfixList.append(token)
         elif token == '(':
             opStack.append(token)
-            #postfixList.append(token)
+        #postfixList.append(token)
         elif token == ')':
             topToken = opStack.pop()
             while topToken != '(':
                 postfixList.append(topToken)
                 if opStack:
                     topToken = opStack.pop()
-            #postfixList.append(")")
+        #postfixList.append(")")
         else:
             while (len(opStack)!= 0) and \
-               (prec[opStack[-1]] >= prec[token]):
-                  postfixList.append(opStack.pop())
+                (prec[opStack[-1]] >= prec[token]):
+                    postfixList.append(opStack.pop())
             opStack.append(token)
 
-    while (len(opStack)!= 0):
-        postfixList.append(opStack.pop())
+while (len(opStack)!= 0):
+    postfixList.append(opStack.pop())
     #print " ".join(postfixList)
     return " ".join(postfixList)
 
@@ -318,7 +318,7 @@ def cnfConversion(stack):
         else:
             newList.append(elementValue)
         i = i+1
-
+    
     for elementValue in newList:
         if elementValue == "&":
             tempList = result[-1]
@@ -393,12 +393,12 @@ def allPredicateNameDict():
 truePredicateDict = {}
 
 '''
-def unify(logic1, logic2, substitution):
+    def unify(logic1, logic2, substitution):
     if substitution == None:
-        return None
+    return None
     if logic1 == logic2:
-        return logic1
-'''
+    return logic1
+    '''
 def isPresentInKB(query):
     for key in truePredicateDict.keys():
         if truePredicateDict[key] == query:
@@ -437,10 +437,10 @@ def unify(predicateName, predicateArgs, unificationDic):
             result.append(elementValue)
     '''for (elementType, elementValue, elementPos) in unificationDic.keys():
         if elementType != 'CONSTANT':
-            result.append(unificationDic[(elementType, elementValue, elementPos)][1])
+        result.append(unificationDic[(elementType, elementValue, elementPos)][1])
         else:
-            result.append(elementValue)'''
-    return predicateName + "(" + ",".join(result) + ")"
+        result.append(elementValue)'''
+return predicateName + "(" + ",".join(result) + ")"
 
 
 
@@ -521,10 +521,10 @@ def unifyPredicates(predicate1, predicate2):
             elif (elementType, elementValue) not in result.keys():
                 result[(elementType, elementValue)] = (elementType2, elementValue2)
         elif elementType == 'VARIABLE' or elementType2 == 'VARIABLE':
-                result[(elementType, elementValue)] = (elementType2, elementValue2)
+            result[(elementType, elementValue)] = (elementType2, elementValue2)
         elif elementType == 'CONSTANT' and elementType2 == 'CONSTANT' and elementValue != elementValue2:
             return False,{}
-        i = i + 1
+i = i + 1
     if set(result.keys()) & set(result.values()):
         intersectionlist = list(set(result.keys()) & set(result.values()))
         i = 0
@@ -547,19 +547,19 @@ def unifyPredicates(predicate1, predicate2):
                         keyIntersection.append(key)
             while j<len(keyIntersection):
                 #(elementType, elementValue) =
-               # if result[intersectionlist[j]][0]!='CONSTANT':
+                # if result[intersectionlist[j]][0]!='CONSTANT':
                 if result[keyIntersection[j]][0] == 'CONSTANT' and result[keyIntersection[j]][1] != constantValue[1]:
                     return False,{}
                 else:
                     result[keyIntersection[j]] = constantValue
                 j = j + 1
-        else:
-            value = intersectionlist[0]
-            j = 0
+else:
+    value = intersectionlist[0]
+        j = 0
             while j < len(intersectionlist):
                 result[intersectionlist[j]] == value
                 j = j + 1
-    return True, result
+return True, result
 
 
 def checkTautology(sentence):
@@ -580,7 +580,7 @@ def checkTautology(sentence):
         i = i + 1
     return False
 
-
+m = 1
 resolve=[]
 isResolved =False
 index = 0
@@ -589,65 +589,71 @@ def resolution1(KB,resolvent):
     global loopstack
     global index
     print KB
-
+    global m
     #sentence1 = KB[KB.keys()[0]]
-
+    
     sentence1Predicates = resolvent.replace(" ","").split("|")
     negatedPredicateSentences=[]
     for predicate in sentence1Predicates:
         negatedPredicateSentences.append(findNegatedPredicate(predicate,KB))
     if not negatedPredicateSentences:
-       return
-       #negatedPredicateSentences.sort(key=len)
+        return
+#negatedPredicateSentences.sort(key=len)
+print "loopstack", loopstack
     i = 0
-    for negatedPredicateSentence in negatedPredicateSentences:
+    while i<len(sentence1Predicates):
         predicate = sentence1Predicates[i]
         predicateName = getPredicateName(predicate)
-        for sentence2LineNumber in negatedPredicateSentence:
-            sentence2 = KB[sentence2LineNumber]
-            sentence2Predicates = sentence2.replace(" ","").split("|")
-           #sentence2predicate =  sentence2Predicates[j]
-            for predicate2 in sentence2Predicates:
-                predicate2Name = getPredicateName(predicate2)
-                if "~" in predicateName:
-                   negatedSentence2Predicate = predicateName.replace("~","")
-                else:
-                    negatedSentence2Predicate = "~"+predicateName
-                if negatedSentence2Predicate == predicate2Name:
-                    if canUnify(predicate,predicate2):
-                        unificationPossible, unificationValues = unifyPredicates(predicate,predicate2)
-                        if unificationPossible:
-                            newPredicate1list=copyList(sentence1Predicates)
-                            newPredicate1list.remove(predicate)
-                            newPredicate2list=copyList(sentence2Predicates)
-                            newPredicate2list.remove(predicate2)
-                            newSentencePredicates = list(set(set(newPredicate1list).union(newPredicate2list)))
-                            if not newSentencePredicates:
-                                isResolved = True
-                                return True
-                            unifiedSentence = unifySentence("|".join(newSentencePredicates),unificationValues)
-
-                                #elif (unifiedSentence, predicate,sentence2) not in loopstack:
-                                 #   loopstack.append((unifiedSentence, predicate,sentence2))
-
-                            if (sentence2, resolvent, unificationValues, predicate2) in loopstack:
-                                k = [i for i,x in enumerate(loopstack) if x == (sentence2, resolvent, unificationValues, predicate2)]
-                                index = len(loopstack)-k[0]-1
-                            else:
-                                if index > 0:
-                                    index = index - 1
+        for negatedPredicateSentence in negatedPredicateSentences:
+            print i, sentence1Predicates
+            #if i>len(sentence1Predicates):
+            #   return
+            
+            for sentence2LineNumber in negatedPredicateSentence:
+                sentence2 = KB[sentence2LineNumber]
+                sentence2Predicates = sentence2.replace(" ","").split("|")
+                #sentence2predicate =  sentence2Predicates[j]
+                for predicate2 in sentence2Predicates:
+                    predicate2Name = getPredicateName(predicate2)
+                    if "~" in predicateName:
+                        negatedSentence2Predicate = predicateName.replace("~","")
+                    else:
+                        negatedSentence2Predicate = "~"+predicateName
+                    if negatedSentence2Predicate == predicate2Name:
+                        if canUnify(predicate,predicate2):
+                            unificationPossible, unificationValues = unifyPredicates(predicate,predicate2)
+                            if unificationPossible:
+                                newPredicate1list=copyList(sentence1Predicates)
+                                newPredicate1list.remove(predicate)
+                                newPredicate2list=copyList(sentence2Predicates)
+                                newPredicate2list.remove(predicate2)
+                                newSentencePredicates = list(set(set(newPredicate1list).union(newPredicate2list)))
+                                if not newSentencePredicates:
+                                    isResolved = True
                                     return
-                                else:
+                                unifiedSentence = unifySentence("|".join(newSentencePredicates),unificationValues)
+                                #unifiedSentence = standardiseVariable(unifiedSentence, m)
+                                #m = m+1
+                                #elif (unifiedSentence, predicate,sentence2) not in loopstack:
+                                #   loopstack.append((unifiedSentence, predicate,sentence2))
+                                
+                                if (predicate,  sentence2, predicate2) not in loopstack:
+                                    #k = [i for i,x in enumerate(loopstack) if x == (unifiedSentence,unificationValues)]
+                                    #index = len(loopstack)-k[0]-1
+                                    #loopstack.pop()
                                     if not checkTautology(unifiedSentence):
-                                        loopstack.append((sentence2, resolvent, unificationValues, predicate2))
-                                        resolution1(KB,unifiedSentence)
-                            if isResolved:
-                                return True
-                                #print unifiedSentence
+                                        loopstack.append((predicate,  sentence2, predicate2))
+                                        resolution1(KB, unifiedSentence)
+                                        loopstack.pop()
+                                #else:
+                                #loopstack.pop()
+                                if isResolved:
+                                    return
+#print unifiedSentence
 
 
-        i = i+1
-    return False
+                                        i = i+1
+return
 
 def standardiseVariable(sentence, line):
     result = []
@@ -671,15 +677,17 @@ def createnewKB():
     return KB
 
 def __main__(kb,queries):
-    m = 1
+    global isResolved
+    global loopstack
+    global m
     for i in xrange(len(kb)):
         logic = removeMultipleNot(parseSentence(kb[i], 0), kb[i])
         logic = removeImplicationinLogic(parseSentence(logic, i + 1))
-
-
-            # removeImplicationinLogic(parseSentence(kb[i],i+1))
-            # print newKB[i]
-            # newKB[i] = moveNotInwards(newKB[i], parseSentence(newKB[i], i+1))
+        
+        
+        # removeImplicationinLogic(parseSentence(kb[i],i+1))
+        # print newKB[i]
+        # newKB[i] = moveNotInwards(newKB[i], parseSentence(newKB[i], i+1))
         if "&" in logic:
             print "postfix"
             cnfList = cnfConversion(infixToPostfix(logic))
@@ -694,48 +702,52 @@ def __main__(kb,queries):
             newKB.append(logic)
             KBDict[m] = logic
             m = m + 1
-    # print cnfKB
-    clearallDict()
+# print cnfKB
+clearallDict()
     print newKB
     print "KB dict"
     print KBDict
     makeCopiesofDict()
     allPredicateNameDict()
-
+    
     for i in KBDict.keys():
         sentence = parseSentence(KBDict[i], 0)
         if len(sentence) <= 2 and sentence:
             truePredicateDict[i] = KBDict[i]
 
-    #print truePredicateDict
+#print truePredicateDict
 
 
 
-    KB = createnewKB()
+KB = createnewKB()
     for resolveQuery in queries:
+        print resolveQuery
+        loopstack=[]
         KB1 = {}
-        resolveQuery = "Ancestor(Liz,Billy)"
+        isResolved = False
+        #resolveQuery = "Ancestor(Liz,Billy)"
         if "~" in resolveQuery:
             resolveQuery = resolveQuery.replace("~", "")
         else:
             resolveQuery = "~" + resolveQuery
         #KB = createnewKB()
-
+        
         KB[len(KB.keys()) + 1] = resolveQuery
-
+        
         listsinKBbyLength = sorted(KB.values(), key=len)
-
+        
         i = 1
-
+        
         while i <= len(KB.keys()):
             KB1[i] = listsinKBbyLength[i - 1]
             i = i + 1
-
+        
         # print resolution1(resolveQuery)
+        #loopstack.append(resolveQuery)
+        resolution1(KB1, resolveQuery)
+    print "resolved: ", isResolved
 
-        print resolution1(KB1, resolveQuery)
-
-    # print unifyPredicates('P(x,y,John)','P(Sam,z,John)')
+# print unifyPredicates('P(x,y,John)','P(Sam,z,John)')
 
 
 #__main__()
@@ -757,5 +769,6 @@ def readData():
     __main__(kb,queries)
 
 
-#readData()
+readData()
 #print checkTautology("A(x,John)|B(x,y)|C(James)|A(x,John)")
+#print unifyPredicates("A(x1,z1,y1)","A(x,x,y)")
