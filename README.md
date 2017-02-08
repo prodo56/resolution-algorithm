@@ -1,5 +1,6 @@
 # Resolution Inference Algorithm
 The resolution inference algorithm, full first-order version is used to solve the problem
+
 **_Format for input.txt_**:
 <NQ = NUMBER OF QUERIES>
 <QUERY 1>
@@ -20,6 +21,7 @@ predicate name will not appear with different number of arguments.
 * See the sample input below for spacing patterns.
 * You can assume that the input format is exactly as it is described. There will be no syntax errors in the
 given input.
+
 **_Format for output.txt_**:
 For each query, each line represents if that query can be inferred from the knowledge base or not:
 <ANSWER 1>
