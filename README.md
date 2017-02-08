@@ -3,12 +3,19 @@ The resolution inference algorithm, full first-order version is used to solve th
 
 **_Format for input.txt_**:
 > NQ = NUMBER OF QUERIES
+
 > QUERY 1
+
 > ...
+
 > QUERY NQ
+
 > NUMBER OF GIVEN SENTENCES IN THE KNOWLEDGE BASE
+
 > SENTENCE 1
+
 > ...
+
 > SENTENCE NS
 
 where
@@ -23,6 +30,9 @@ where
 **_Format for output.txt_**:
 For each query, each line represents if that query can be inferred from the knowledge base or not:
 > ANSWER 1
+
 > ...
+
 > ANSWER NQ
+
 where each answer is either TRUE if you can prove that the corresponding query sentence is true given the knowledge base, or FALSE if you cannot.
