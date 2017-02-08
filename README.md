@@ -28,6 +28,7 @@ where
 * You can assume that the input format is exactly as it is described. There will be no syntax errors in the given input.
 
 **_Format for output.txt_**:
+
 For each query, each line represents if that query can be inferred from the knowledge base or not:
 > ANSWER 1
 
